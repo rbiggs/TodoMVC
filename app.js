@@ -1,7 +1,8 @@
+/// <reference path='dist/typings/tsd.d.ts' />
 $(function() {
   $('nav h1').removeAttr('style');
 
-  // Configure $.Box for 
+  // Configure $.Box for
   // local data persistence:
   //========================
   $.Box.config({
@@ -16,9 +17,9 @@ $(function() {
   var TodoView = $.View({
     element: '#todo-items',
     variable: 'todo',
-    template: '<li class="${ todo.state }">\
+    template: '<li class="{= todo.state }">\
         <button class="set-state"><svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="selection-indicator"><path d="M2,13 L9.9294326,16.8406135 L17.1937075,1.90173332" id="checkmark" stroke="#007AFF" stroke-width="2"></path></g></g></svg></button>\
-        <h3>${ todo.value }</h3>\
+        <h3>{= todo.value }</h3>\
         <button class="delete-item">\
           <svg width="20px" height="20px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Delete" stroke="#FF0000" stroke-width="2" stroke-linecap="square"><path d="M26.5,3.5 L3.5,26.5" id="Line"></path><path d="M3.5,3.5 L26.5,26.5" id="Line"></path></g></g></svg>\
         </button>\
@@ -28,8 +29,8 @@ $(function() {
   // Define templates for singular and plural:
   //==========================================
   var todoStateTemplate = [
-    '${ number } item left.',
-    '${ number } items left.'
+    '{= number } item left.',
+    '{= number } items left.'
   ];
 
   // Define Totals View:
@@ -73,7 +74,7 @@ $(function() {
       renderActiveTodos(TodosData);
     }
   });
-  
+
   // Create a view to register events:
   //==================================
   var AppView = $.View({
@@ -137,19 +138,19 @@ $(function() {
           switch(id) {
             // Show all todos:
             case 'show-all':
-              todoItems.css(listItemFlex);
+              todoItems.css({display: '-webkit-flex',display: 'flex'});
               toggleButtonState(this);
               break;
             // Show only active todos:
             case 'show-active':
-              todoItems.hazClass('active').css(listItemFlex);
+              todoItems.hazClass('active').css({display: '-webkit-flex',display: 'flex'});
               todoItems.hazntClass('active').hide();
               toggleButtonState(this);
             break;
             // Show only completed todos:
             case 'show-completed':
               todoItems.hazClass('active').hide();
-              todoItems.hazntClass('active').css(listItemFlex);
+              todoItems.hazntClass('active').css({display: '-webkit-flex',display: 'flex'});
               toggleButtonState(this);
             break;
           }
@@ -160,10 +161,6 @@ $(function() {
 
   // Show todos by state:
   //=====================
-  var listItemFlex = {
-    'display': '-webkit-flex',
-    'display': 'flex'
-  };
 
   function toggleButtonState(elem) {
     $(elem).siblings().removeClass('selected');
